@@ -1,0 +1,9 @@
+{
+  "type": "<%=type%>",
+  "name": "<%=name%>",
+  "author": "<%=authorName%>",
+  "email": "<%=authorEmail%>",
+  "version": "0.0.1",
+  "description": "<%=description%>",
+  "dependencies": {}
+}

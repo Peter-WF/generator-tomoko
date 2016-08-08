@@ -1,14 +1,26 @@
 /**
  * Created by Peter on 16/8/8.
  */
+/*
+ *https://segmentfault.com/a/1190000002630463
+ initializing - 你的初始化函数，就是构造函数，主要就是检查一下参数什么的
+ prompting - 给用户展示你的菜单，选点东西什么的
+ configuring - 保存配置信息，创建类似.editorconfig的文件
+ default - 就是默认，只要不在这个列表里的函数都在这个位置执行
+ writing - 创建模板文件
+ conflicts - 处理异常和冲突
+ install - 装npm和bower依赖什么的
+ end - 打个命令行祝贺使用者成功了
+
+ * */
 
 var path = require('path');
 var generators = require('yeoman-generator');
 var colors = require('colors');
 
-var utils = require('./lib/utils');
+// 用于存放提示信息
+var prompts = [];
 
-//var prompts = require('./prompts');
 
 module.exports = generators.Base.extend({
 
@@ -17,82 +29,93 @@ module.exports = generators.Base.extend({
         // Calling the super constructor is important so our generator is correctly set up
         generators.Base.apply(this, arguments);
 
-
+        // 用于记录模板对象
         this.props = {};
-        /* // Next, add your custom code
-         this.option('coffee'); // This method adds support for a `--coffee` flag
-         this.destinationRoot('node-zbj');
-         this.log( this.templatePath())
-         */
-        /* this.log(this.config);
-         this.log(this.options);
-         this.log(this);*/
+
+        this.argument('ifAddExample',
+            {
+                desc: "用于标识当前操作是否是添加示例",
+                type: String,
+                defaults: "false"
+            });
     },
     //输入提示
     prompting: {
-        askComponentName: function () {
-            if (this.name) {
-                return;
-            }
-            var next = this.async();
+        // 初始化配置信息
+        initConfig: function () {
+            // 判断是否是添加示例
+            if (this.ifAddExample === "false") {
+                // 初始化提示信息
+                prompts = require('./prompts/init-structure');
+            } else {
+                var pkg = this.fs.readJSON(this.destinationPath('component.json'), {});
+                console.log(JSON.stringify(pkg, null, '  '));
+                if (pkg.name) {
+                    // 初始化提示信息
+                    prompts = require('./prompts/add-example');
+                    // 初始化模板类型
+                    this.props.type = "example";
 
-            // Handle setting the root early, so .yo-rc.json ends up the right place.
-            this.prompt({
-                type: 'input',
-                name: 'name',
-                message: '* '.red + '请输入组件名称 :',
-                validate: function (name) {
-                    if (name.length == 0) {
-                        return '组件名称不能为空';
-                    }
-                    if (utils.ifExist(name)) {
-                        return '当前组件名称已存在';
-                    }
-                    return true;
+                    // 从组件配置信息中获取用户信息
+                    this.props.authorName = pkg.author;
+                    this.props.authorEmail = pkg.email;
+                } else {
+                    throw Error("请在组件文件夹内创建示例".red);
                 }
-            }).then(function (props) {
-                this.props.name = props.name;
+            }
+        },
+        /**
+         * 遍历 prompts ,并将用户输入绑定至 this.props
+         */
+        askFor: function () {
+            var next = this.async();
+            this.prompt(prompts).then(function (props) {
+                for (var key in props) {
+                    //排除原型链中的属性
+                    if (props.hasOwnProperty(key)) {
+                        this.props[key] = props[key];
+                    }
+                }
                 next();
             }.bind(this));
         },
-        setComponentName: function () {
+        /**
+         * 根据 组件名/示例名 设置目标路径
+         */
+        setDestinationRoot: function () {
+            var oldRoot = "";
             var name = this.props.name;
-            //if (name.indexOf('nodejs-') < 0) {
-            //    name = 'nodejs-' + name;
-            //}
-            //this.props.name = name;
-            var oldRoot = this.destinationRoot();
+            if (this.ifAddExample === "false") {
+                oldRoot = this.destinationRoot()
+            } else {
+                oldRoot = this.destinationRoot() + "/examples";
+            }
             if (path.basename(oldRoot) !== name) {
                 this.destinationRoot(path.join(oldRoot, name));
             }
-        },
-        askFor: function () {
-            //var next = this.async();
-            //this.prompt(prompts, function (props) {
-            //    for (var key in props) {
-            //        this.props[key] = props[key];
-            //    }
-            //    next();
-            //}.bind(this));
         }
     },
 
     writing: {
+        /**
+         * 记录文件创建时间
+         */
+        addTimestamp: function () {
+            this.props["date"] = new Date();
+        },
+        /**
+         * 拷贝模板文件并渲染
+         */
         copyApp: function () {
-            var tempPath = this.templatePath();
-            console.log(tempPath);
+            // 获取模板路径
+            var tempPath = this.templatePath() + "/" + this.props.type;
+
+            // 创建并渲染模板
             this.fs.copyTpl(
-                this.templatePath(),
+                tempPath,
                 this.destinationPath(),
                 this.props
             );
-        },
-        pkgFile: function () {
-            var pkg = this.fs.readJSON(this.destinationPath('component.json'), {});
-            pkg.name = this.props.name;
-            pkg.author = pkg.author || this.props.author;
-            pkg.description = pkg.description || this.props.description;
-            this.fs.writeJSON(this.destinationPath('package.json'), pkg);
         }
     },
     install: {
@@ -106,18 +129,6 @@ module.exports = generators.Base.extend({
         //this.log(('    $npm install').green);
         //this.log(('    $npm start').green);
         //this.log(('Visit url: http://localhost:3000/index').underline);
-    },
-
-    //_开头的方法不参与generator
-    _mergeArr: function (arr, arr2) {
-        arr = arr || [];
-        arr2 = arr2 || [];
-        arr2.forEach(function (item) {
-            if (arr.indexOf(item) == -1) {
-                arr.push(item);
-            }
-        });
-        return arr;
     }
 });
 

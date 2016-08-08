@@ -1,13 +1,15 @@
 /**
  * Created by Peter on 16/8/8.
  */
+
+var Utils = require('../lib/utils');
+
 module.exports = [
     {
         type: 'list',
         name: 'type',
         message: '* '.red + '请选择组件类型 : ',
         choices: [
-            new inquirer.Separator(),
             {
                 name: '纯 js 组件模板',
                 value: 'js'
@@ -15,12 +17,25 @@ module.exports = [
             {
                 name: '纯 css(less) 组件模板',
                 value: 'less'
-            },
-            new inquirer.Separator()
+            }
         ],
         default: 'js',
         filter: function (val) {
             return val.toLowerCase();
+        }
+    },
+    {
+        type: 'input',
+        name: 'name',
+        message: '* '.red + '请输入组件名称 :',
+        validate: function (name) {
+            if (name.length == 0) {
+                return '组件名称不能为空';
+            }
+            if (Utils.ifExist(name)) {
+                return '当前组件名称已存在';
+            }
+            return true;
         }
     },
     {
@@ -39,7 +54,7 @@ module.exports = [
         name: 'authorEmail',
         message: '* '.red + '请输入作者邮箱 : ',
         validate: function (value) {
-            if (name.length == 0) {
+            if (value.length == 0) {
                 return '作者邮箱不能为空';
             }
             var pass = value.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/);
@@ -52,6 +67,6 @@ module.exports = [
     {
         type: 'input',
         name: 'description',
-        message: '请输入组件描述 : '
+        message: '  请输入组件描述 : '
     }
 ];

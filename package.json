@@ -1,0 +1,14 @@
+{
+  "name": "generator-tomoko",
+  "version": "1.0.0",
+  "description": "tomoko 脚手架",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter-WF",
+  "license": "ISC",
+  "dependencies": {
+    "yeoman-generator": "^0.24.1"
+  }
+}

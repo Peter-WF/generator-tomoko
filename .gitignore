@@ -1,0 +1,5 @@
+/app/templates/node_modules
+/npm-debug.log
+.idea/**
+/app/logs
+node_modules/**

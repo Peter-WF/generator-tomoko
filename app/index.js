@@ -49,7 +49,7 @@ module.exports = generators.Base.extend({
                 prompts = require('./prompts/init-structure');
             } else {
                 var pkg = this.fs.readJSON(this.destinationPath('component.json'), {});
-                console.log(JSON.stringify(pkg, null, '  '));
+                //console.log(JSON.stringify(pkg, null, '  '));
                 if (pkg.name) {
                     // 初始化提示信息
                     prompts = require('./prompts/add-example');

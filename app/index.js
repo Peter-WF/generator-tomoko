@@ -60,7 +60,8 @@ module.exports = generators.Base.extend({
                     this.props.authorName = pkg.author;
                     this.props.authorEmail = pkg.email;
                 } else {
-                    throw Error("请在组件文件夹内创建示例".red);
+                    console.log("请在组件文件夹内创建示例".red);
+                    return false;
                 }
             }
         },

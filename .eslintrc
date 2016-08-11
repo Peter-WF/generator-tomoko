@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": false,
+    "node": true,
+    "amd": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "camelcase": [
+      2,
+      {
+        "properties": "always"
+      }
+    ],
+    "indent": 2,
+    "keyword-spacing": 2,
+    "space-infix-ops": 2,
+    "comma-spacing": [
+      2,
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "brace-style": 2,
+    "semi": 2,
+    "curly": 2,
+    "newline-after-var": 2,
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "no-constant-condition": 2,
+    "no-debugger": 2,
+    "no-console": 1,
+    "no-dupe-args": 2,
+    "no-dupe-keys": 2,
+    "no-duplicate-case": 2,
+    "no-ex-assign": 2,
+    "no-extra-boolean-cast": 2,
+    "no-func-assign": 2,
+    "no-inner-declarations": 2,
+    "no-irregular-whitespace": 2,
+    "no-negated-in-lhs": 2,
+    "no-obj-calls": 2,
+    "no-unexpected-multiline": 2,
+    "no-unreachable": 2,
+    "use-isnan": 2,
+    "valid-typeof": 2,
+    "no-unused-vars": 1
+  }
+}

@@ -11,15 +11,15 @@ module.exports = [
         message: '* '.red + '请选择组件类型 : ',
         choices: [
             {
-                name: '纯 js 组件模板',
-                value: 'js'
+                name: 'js 组件模板',
+                value: 'jscmp'
             },
             {
-                name: '纯 css(less) 组件模板',
-                value: 'less'
+                name: 'css(less) 组件模板',
+                value: 'lesscmp'
             }
         ],
-        default: 'js',
+        default: 'jscmp',
         filter: function (val) {
             return val.toLowerCase();
         }
@@ -62,6 +62,17 @@ module.exports = [
                 return true;
             }
             return '请输入正确的邮箱';
+        }
+    },
+    {
+        type: 'input',
+        name: 'group',
+        message: '* '.red + '请输入组件分组名 : ',
+        validate: function (value) {
+            if (value.length == 0) {
+                return '组件分组名不能为空';
+            }
+            return true;
         }
     },
     {

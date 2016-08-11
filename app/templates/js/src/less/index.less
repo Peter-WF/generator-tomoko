@@ -5,4 +5,3 @@
  * @description  <%=description%>
  */
 
-@import "./less/index.less";

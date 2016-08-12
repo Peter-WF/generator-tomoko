@@ -4,6 +4,9 @@ stages:
 npm-publish:
   stage: build
   script:
+  - nrm use taobao
+  - npm install
+  - nrm use npm
   - npm publish
   only:
     - master

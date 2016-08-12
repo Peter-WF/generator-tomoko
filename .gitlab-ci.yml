@@ -4,7 +4,6 @@ stages:
 npm-publish:
   stage: build
   script:
-  - npm install
   - npm publish
   only:
     - master

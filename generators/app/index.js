@@ -16,7 +16,6 @@
 
 var path = require('path');
 var generators = require('yeoman-generator');
-/* exported variableName */
 var colors = require('colors');
 
 // 用于存放提示信息
@@ -51,7 +50,6 @@ module.exports = generators.Base.extend({
             } else {
                 var pkg = this.fs.readJSON(this.destinationPath('component.json'), {});
 
-                //console.log(JSON.stringify(pkg, null, '  '));
                 if (pkg.name) {
                     // 初始化提示信息
                     prompts = require('./prompts/add-example');
@@ -62,8 +60,7 @@ module.exports = generators.Base.extend({
                     this.props.authorName = pkg.author;
                     this.props.authorEmail = pkg.email;
                 } else {
-                    console.log("请在组件文件夹内创建示例".red);
-                    return false;
+                    throw "请在组件文件夹内创建示例";
                 }
             }
         },

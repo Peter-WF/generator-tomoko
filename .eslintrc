@@ -49,6 +49,6 @@
     "no-unreachable": 2,
     "use-isnan": 2,
     "valid-typeof": 2,
-    "no-unused-vars": 0
+    "no-unused-vars": 1
   }
 }

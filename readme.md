@@ -1,4 +1,4 @@
-# Tomoko component
+# Tomoko component generator [![Coverage Status](https://coveralls.io/repos/github/Peter-WF/generator-tomoko/badge.svg?branch=master&foo=bar)](https://coveralls.io/github/Peter-WF/generator-tomoko) [![Build Status](https://travis-ci.org/Peter-WF/generator-tomoko.svg?branch=master)](https://travis-ci.org/Peter-WF/generator-tomoko)
 通用的 Tomoko component 模板脚手架
 ## Getting Started
 ### Installation

@@ -4,6 +4,8 @@
 
 var Utils = require('../lib/utils');
 
+var userInfo = Utils.getGitConfig().user;
+
 module.exports = [
     {
         type: 'list',
@@ -42,7 +44,7 @@ module.exports = [
         type: 'input',
         name: 'authorName',
         message: '* '.red + '请输入作者姓名 : ',
-        default: Utils.getGitConfig().user.name,
+        default: userInfo ? userInfo.name : "",
         validate: function (name) {
             if (name.length == 0) {
                 return '作者名不能为空';
@@ -54,7 +56,7 @@ module.exports = [
         type: 'input',
         name: 'authorEmail',
         message: '* '.red + '请输入作者邮箱 : ',
-        default: Utils.getGitConfig().user.email,
+        default: userInfo ? userInfo.email : "",
         validate: function (value) {
             if (value.length == 0) {
                 return '作者邮箱不能为空';

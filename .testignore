@@ -1,0 +1,19 @@
+/app/templates/node_modules
+/npm-debug.log
+.idea/**
+node_modules/**
+
+/generators/app/templates
+
+# generator  templates
+/generators/app/templates
+
+# 输入提示
+/generators/app/prompts
+
+
+# 覆盖率报告
+coverage
+
+# test 单元测试文件
+test

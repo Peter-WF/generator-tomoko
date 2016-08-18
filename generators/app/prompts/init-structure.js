@@ -44,7 +44,7 @@ module.exports = [
         type: 'input',
         name: 'authorName',
         message: '* '.red + '请输入作者姓名 : ',
-        default: userInfo ? userInfo.name : "",
+        default: Utils.getGitConfig('user.name'),
         validate: function (name) {
             if (name.length == 0) {
                 return '作者名不能为空';
@@ -56,7 +56,7 @@ module.exports = [
         type: 'input',
         name: 'authorEmail',
         message: '* '.red + '请输入作者邮箱 : ',
-        default: userInfo ? userInfo.email : "",
+        default: Utils.getGitConfig('user.email'),
         validate: function (value) {
             if (value.length == 0) {
                 return '作者邮箱不能为空';

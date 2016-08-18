@@ -38,6 +38,7 @@ describe('generator-tomoko: create a js component', function () {
                 group: 'fe-group',
                 description: '组件描述'
             })
+            .inDir(path.join(__dirname, '../test/output/test1'))
             .toPromise();
     });
 
@@ -57,6 +58,7 @@ describe('generator-tomoko: create a less component', function () {
                 group: 'fe-group',
                 description: '组件描述'
             })
+            .inDir(path.join(__dirname, '../test/output/test2'))
             .toPromise();
     });
     it('creates files', function () {

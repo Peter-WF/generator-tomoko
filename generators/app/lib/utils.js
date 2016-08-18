@@ -3,6 +3,7 @@
  */
 
 var gitConfig = require('git-config');
+var _ = require('lodash');
 
 module.exports = {
     ifExist: ifExist,
@@ -14,6 +15,14 @@ function ifExist() {
 
     return false;
 }
-function getGitConfig() {
-    return gitConfig.sync();
+/**
+ * 返回 gitconfig
+ * @param  {String}                         key                          获取指定键值
+ */
+function getGitConfig(key) {
+    var gitConfigObj = gitConfig.sync();
+    if (key) {
+        return _.get(gitConfigObj, key);
+    }
+    return gitConfigObj;
 }

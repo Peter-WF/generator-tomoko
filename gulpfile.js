@@ -12,6 +12,7 @@ var coveralls = require('gulp-coveralls');
 gulp.task('static', function () {
     return gulp.src('**/*.js')
         .pipe(excludeGitignore())
+        .pipe(excludeGitignore(path.resolve('.testignore')))
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failAfterError());
@@ -24,6 +25,7 @@ gulp.task('nsp', function (cb) {
 gulp.task('pre-test', function () {
     return gulp.src('generators/**/*.js')
         .pipe(excludeGitignore())
+        .pipe(excludeGitignore(path.resolve('.testignore')))
         .pipe(istanbul({
             includeUntested: true
         }))
